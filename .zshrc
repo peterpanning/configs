@@ -1,7 +1,14 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 ####### ZSHRC #######
 
 # This zsh configuration file relies mainly on built in zsh features,
-# antibody (a very fast plugin manager written in Go), and Powerlevel9k
+# antidote (the successor to antigen and antibody), and Powerlevel10k
 # (a simple and powerful prompt customization plugin).
 
 
@@ -25,29 +32,6 @@ HYPHEN_INSENSITIVE="true"
 
 COMPLETION_WAITING_DOTS="true"
 
-# Only relevant if using vim keybindings for command line editing:
-# Lowering key timeout makes it faster to switch between insert and normal modes.
-# This may cause problems with other terminal commands which depended on this delay.
-
-#export KEYTIMEOUT=.1
-
-
-
-
-####### ANTIBODY #######
-
-# Antibody loads the powerlevel9k plugin, and this variable must be set before doing so.
-
-POWERLEVEL9K_MODE='nerdfont-complete'
-
-# Start antibody plugin manager, dynamically load plugins
-# Static loading: 
-# run `antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh`
-# the next line sources the file you just generated, so sourcing this file
-# sources that file. This loads all zsh plugins--statically. Hopefully this
-# results in faster startup times. 
-source ~/.zsh_plugins.sh
-
 ####### ALIASES #######
 
 # For a full list of active aliases, run `alias`.
@@ -55,16 +39,20 @@ source ~/.zsh_plugins.sh
 alias zshconfig="vim ~/.zshrc"
 alias ls="ls -G" 		# Adds colored output
 
-# Access pillpack production console 
-if [ -f ~/Code/infrastructure/venv/bin/activate ]; then
-    alias prod="source ~/Code/infrastructure/venv/bin/activate && ~/Code/infrastructure/scripts/wrap_mfa.py --aws-account-name EngineYard --aws-role-name pillpack_iam_dev ~/Code/infrastructure/scripts/ssmyo.py --stack Broadwing-prod4 --utility-ppcore"
-fi
 # causes chpwd() to function as it normally would in zsh and ls in the new dir. 
 
 function chpwd() {
   emulate -L zsh
   ls -a
 }
+
+####### ANTIDOTE #######
+
+# source antidote
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
+
+# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
+antidote load
 
 
 ####### POWERLEVEL9K #######
@@ -117,8 +105,11 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX_FOREGROUND='white'
 
 ###### ITERM2 SHELL INTEGRATION ######
 
-source 	~/.iterm2_shell_integration.zsh
+#source 	~/.iterm2_shell_integration.zsh
 
 ###### RVM ######
 # Has to be loaded last or RubyMine complains
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

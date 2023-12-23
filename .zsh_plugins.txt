@@ -1,9 +1,9 @@
 # List of zsh plugins loaded by antibody and hosted on github
 
-robbyrussell/oh-my-zsh path:plugins/virtualenv
 robbyrussell/oh-my-zsh path:plugins/python
 robbyrussell/oh-my-zsh path:plugins/git
-bhilburn/powerlevel9k
+romkatv/powerlevel10k
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-history-substring-search
+darvid/zsh-poetry
