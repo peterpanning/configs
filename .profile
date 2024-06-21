@@ -5,7 +5,8 @@ export CLICOLOR=1
 export TERM=xterm-256color
 
 ###### JAVA HOME ENV VARIABLE ######
-export JAVA_HOME="$(/usr/libexec/java_home)"
+# Uncomment if java is installed 
+#export JAVA_HOME="$(/usr/libexec/java_home)"
 
 ###### NVM ######
 export NVM_DIR="$HOME/.nvm"
